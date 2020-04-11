@@ -24,7 +24,7 @@
 
 ## Author
 
-**Music-Bot** © [iCrawl](https://github.com/iCrawl), Released under the [MIT](https://github.com/YuriScXy/music-bot-example/blob/master/LICENSE.md) License.<br>
+**Music-Bot** © [iCrawl](https://github.com/iCrawl), Released under the [MIT](https://github.com/YuriScXy/Discord_Bot.git) License.<br>
 Authored and maintained by iCrawl. Pre-modified by [YuriScXy](https://github.com/YuriScXy)
 
 > GitHub [@YuriScXy](https://github.com/YuriScXy)
