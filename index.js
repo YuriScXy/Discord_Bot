@@ -15,11 +15,11 @@ bot.on("warn", console.warn);
 
 bot.on("error", console.error);
 
-bot.on("ready", () => console.log(`${bot.user.tag} has been successfully turned on!`));
+bot.on("ready", () => console.log(`${bot.user.tag} Okay, pai ta on!`));
 
-bot.on("disconnect", () => console.log("An error occurred, trying to reconnect!"));
+bot.on("disconnect", () => console.log("Esta havendo erros , por favor tente de novo!"));
 
-bot.on("reconnecting", () => console.log("I am reconnecting now..."));
+bot.on("reconnecting", () => console.log("Irei tentar mais uma vez"));
 
 bot.on("message", async msg => { // eslint-disable-line
     if (msg.author.bot) return undefined;
@@ -35,14 +35,23 @@ bot.on("message", async msg => { // eslint-disable-line
 
     if (command === "help" || command == "cmd") {
         const helpembed = new Discord.RichEmbed()
-            .setColor("#7289DA")
-            .setAuthor(bot.user.tag, bot.user.displayAvatarURL)
-            .setDescription(`
-__**Commands List**__
-> \`play\` > **\`play [title/url]\`**
-> \`skip\`, \`stop\`,  \`pause\`, \`resume\`
-> \`nowplaying\`, \`queue\`, \`volume\``)
-            .setFooter("©️ 2020 Zealcord Development", "https://api.zealcord.xyz/assets/images/logo.png")
+            .setColor('#0099ff')
+	          .setTitle('Lista de Comandos')
+            .setAuthor('Villager ta on', 'https://i.imgur.com/dgAjR2M.jpg')
+            .setDescription('Todos os comandos que este sistema oferece')
+          	.setThumbnail('https://i.imgur.com/eIMpsDv.png')
+            .addField('▶️ !play', 'Coloque o titulo e selecione para tocar', true )
+            .addField('▶️ !play [title/url]', 'Coloque o link que ira entrar na fila', true )
+            .addField('⏭ !skip', 'Pula a musica', true )
+            .addBlankField()
+            .addField('⏹ !stop', 'Para a seleção atual',true )
+            .addField('⏸ !pause', 'Para a musica atual' ,true)
+            .addField('🎶 !resume', 'Retoma a musica atual' ,true)
+            .addBlankField()
+            .addField('🎵 !nowplaying', 'Mostra a musica atual',true )
+            .addField('📜 !queue', 'Mostra a playlist' ,true)
+            .addField('🔊 !volume', 'Altera o Volume' ,true)
+            .setFooter("©️ 2020 Yuri's Development", "https://api.zealcord.xyz/assets/images/logo.png")
         msg.channel.send(helpembed);
     }
 
@@ -64,7 +73,7 @@ __**Commands List**__
                 const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
                 await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
             }
-            return msg.channel.send(`<:yes:591629527571234819>  **|**  Playlist: **\`${playlist.title}\`** has been added to the queue!`);
+            return msg.channel.send(`<:yes:591629527571234819>  **|**  Playlist: **\`${playlist.title}\`** foi adicionado a playlist!`);
         } else {
             try {
                 var video = await youtube.getVideo(url);
@@ -73,11 +82,11 @@ __**Commands List**__
                     var videos = await youtube.searchVideos(searchString, 10);
                     let index = 0;
                     msg.channel.send(`
-__**Song selection:**__
+__**Seleção da Musica:**__
 
 ${videos.map(video2 => `**\`${++index}\`  |**  ${video2.title}`).join("\n")}
 
-Please provide a value to select one of the search results ranging from 1-10.
+Por favor selecione um numero de 1-10 para tocar o desejado.
 					`);
                     // eslint-disable-next-line max-depth
                     try {
@@ -102,33 +111,33 @@ Please provide a value to select one of the search results ranging from 1-10.
 
     } else if (command === "skip") {
         if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
-        if (!serverQueue) return msg.channel.send("There is nothing playing that I could **\`skip\`** for you.");
-        serverQueue.connection.dispatcher.end("Skip command has been used!");
+        if (!serverQueue) return msg.channel.send("Não Há nada na fila para pular!");
+        serverQueue.connection.dispatcher.end("Skip used!");
         msg.channel.send("⏭️  **|**  Skip used!");
         return undefined;
 
     } else if (command === "stop") {
         if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
-        if (!serverQueue) return msg.channel.send("There is nothing playing that I could **\`stop\`** for you.");
+        if (!serverQueue) return msg.channel.send("Não Há nada na fila para parar!");
         serverQueue.songs = [];
-        serverQueue.connection.dispatcher.end("Stop command has been used!");
+        serverQueue.connection.dispatcher.end("Stop used!");
         msg.channel.send("⏹️  **|**  Stop used!");
         return undefined;
 
     } else if (command === "volume" || command === "vol") {
         if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
-        if (!serverQueue) return msg.channel.send("There is nothing playing.");
+        if (!serverQueue) return msg.channel.send("Não há nada tocando😓.");
         if (!args[1]) return msg.channel.send(`The current volume is: **\`${serverQueue.volume}%\`**`);
         serverQueue.volume = args[1];
         serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
         return msg.channel.send(`I set the volume to: **\`${args[1]}%\`**`);
 
     } else if (command === "nowplaying" || command === "np") {
-        if (!serverQueue) return msg.channel.send("There is nothing playing.");
-        return msg.channel.send(`🎶  **|**  Now Playing: **\`${serverQueue.songs[0].title}\`**`);
+        if (!serverQueue) return msg.channel.send("Não há nada tocando😓.");
+        return msg.channel.send(`🎶  **|**  Agora esta tocando: **\`${serverQueue.songs[0].title}\`**`);
 
     } else if (command === "queue" || command === "q") {
-        if (!serverQueue) return msg.channel.send("There is nothing playing.");
+        if (!serverQueue) return msg.channel.send("Não há nada tocando😓.");
         return msg.channel.send(`
 __**Song Queue:**__
 
@@ -143,7 +152,7 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
             serverQueue.connection.dispatcher.pause();
             return msg.channel.send("⏸  **|**  Paused");
         }
-        return msg.channel.send("There is nothing playing.");
+        return msg.channel.send("Não há nada tocando😓.");
 
     } else if (command === "resume") {
         if (serverQueue && !serverQueue.playing) {
@@ -151,7 +160,7 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
             serverQueue.connection.dispatcher.resume();
             return msg.channel.send("▶  **|** Played");
         }
-        return msg.channel.send("There is nothing playing.");
+        return msg.channel.send("Não há nada tocando😓.");
     }
     return undefined;
 });
