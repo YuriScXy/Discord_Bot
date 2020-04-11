@@ -1,4 +1,4 @@
-# music-bot-example
+# Discord-music-bot-example
 
 > Example of a Music Bot project modified by Zealcord, made by DevYukine
 
@@ -24,7 +24,7 @@
 
 ## Author
 
-**Music-Bot** © [iCrawl](https://github.com/iCrawl), Released under the [MIT](https://github.com/zealcordNation/music-bot-example/blob/master/LICENSE.md) License.<br>
-Authored and maintained by iCrawl. Pre-modified by [Zealcord](https://github.com/zealcordNation)
+**Music-Bot** © [iCrawl](https://github.com/iCrawl), Released under the [MIT](https://github.com/YuriScXy/music-bot-example/blob/master/LICENSE.md) License.<br>
+Authored and maintained by iCrawl. Pre-modified by [YuriScXy](https://github.com/YuriScXy)
 
-> GitHub [@zealcordNation](https://github.com/zealcordNation)
+> GitHub [@YuriScXy](https://github.com/YuriScXy)
