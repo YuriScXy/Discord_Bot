@@ -48,13 +48,13 @@ __**Commands List**__
 
     if (command === "play" || command === "p") {
         const voiceChannel = msg.member.voiceChannel;
-        if (!voiceChannel) return msg.channel.send("I'm sorry but you need to be in a voice channel to play a music!");
+        if (!voiceChannel) return msg.channel.send("Por favor entre em um canal de voz");
         const permissions = voiceChannel.permissionsFor(msg.client.user);
         if (!permissions.has("CONNECT")) {
-            return msg.channel.send("Sorry, but i need **`CONNECT`** permissions to proceed!");
+            return msg.channel.send("Eu preciso me conectar");
         }
         if (!permissions.has("SPEAK")) {
-            return msg.channel.send("Sorry, but i need **`SPEAK`** permissions to proceed!");
+            return msg.channel.send("Eu preciso de permissão para falar");
         }
 
         if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -88,35 +88,35 @@ Please provide a value to select one of the search results ranging from 1-10.
                         });
                     } catch (err) {
                         console.error(err);
-                        return msg.channel.send("No or invalid value entered, cancelling video selection...");
+                        return msg.channel.send("Entrada Invalida");
                     }
                     const videoIndex = parseInt(response.first().content);
                     var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
                 } catch (err) {
                     console.error(err);
-                    return msg.channel.send("🆘  **|**  I could not obtain any search results.");
+                    return msg.channel.send("🆘  **|**  Não foi encontrado nenhum resultado");
                 }
             }
             return handleVideo(video, msg, voiceChannel);
         }
 
     } else if (command === "skip") {
-        if (!msg.member.voiceChannel) return msg.channel.send("I'm sorry but you need to be in a voice channel to play a music!");
+        if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
         if (!serverQueue) return msg.channel.send("There is nothing playing that I could **\`skip\`** for you.");
         serverQueue.connection.dispatcher.end("Skip command has been used!");
-        msg.channel.send("⏭️  **|**  Skip command has been used!");
+        msg.channel.send("⏭️  **|**  Skip used!");
         return undefined;
 
     } else if (command === "stop") {
-        if (!msg.member.voiceChannel) return msg.channel.send("I'm sorry but you need to be in a voice channel to play music!");
+        if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
         if (!serverQueue) return msg.channel.send("There is nothing playing that I could **\`stop\`** for you.");
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end("Stop command has been used!");
-        msg.channel.send("⏹️  **|**  Stop command has been used!");
+        msg.channel.send("⏹️  **|**  Stop used!");
         return undefined;
 
     } else if (command === "volume" || command === "vol") {
-        if (!msg.member.voiceChannel) return msg.channel.send("I'm sorry but you need to be in a voice channel to play music!");
+        if (!msg.member.voiceChannel) return msg.channel.send("Você precisa entrar em um chat de voz para ouvir a musica animal");
         if (!serverQueue) return msg.channel.send("There is nothing playing.");
         if (!args[1]) return msg.channel.send(`The current volume is: **\`${serverQueue.volume}%\`**`);
         serverQueue.volume = args[1];
@@ -141,7 +141,7 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
             serverQueue.connection.dispatcher.pause();
-            return msg.channel.send("⏸  **|**  Paused the music for you!");
+            return msg.channel.send("⏸  **|**  Paused");
         }
         return msg.channel.send("There is nothing playing.");
 
@@ -149,7 +149,7 @@ ${serverQueue.songs.map(song => `**-** ${song.title}`).join("\n")}
         if (serverQueue && !serverQueue.playing) {
             serverQueue.playing = true;
             serverQueue.connection.dispatcher.resume();
-            return msg.channel.send("▶  **|**  Resumed the music for you!");
+            return msg.channel.send("▶  **|** Played");
         }
         return msg.channel.send("There is nothing playing.");
     }
